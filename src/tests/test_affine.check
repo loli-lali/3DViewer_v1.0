@@ -1,0 +1,350 @@
+#include <check.h>
+#include "../backend/utils.h"
+
+#test move_x_1
+data_t *A = malloc(sizeof(data_t));
+A->countOfVertexes = 2;
+A->vertexes = malloc(A->countOfVertexes * 3 * sizeof(double));
+A->vertexes[0] = 0;
+A->vertexes[1] = 0;
+A->vertexes[2] = 0;
+A->vertexes[3] = 1;
+A->vertexes[4] = 1;
+A->vertexes[5] = 1;
+move_x(A, 20);
+ck_assert_double_eq(A->vertexes[0], 20);
+ck_assert_double_eq(A->vertexes[1], 0);
+ck_assert_double_eq(A->vertexes[2], 0);
+ck_assert_double_eq(A->vertexes[3], 21);
+ck_assert_double_eq(A->vertexes[4], 1);
+ck_assert_double_eq(A->vertexes[5], 1);
+free(A);
+
+
+#test move_y_1
+data_t *A = malloc(sizeof(data_t));
+A->countOfVertexes = 2;
+A->vertexes = malloc(A->countOfVertexes * 3 * sizeof(double));
+A->vertexes[0] = 0;
+A->vertexes[1] = 0;
+A->vertexes[2] = 0;
+A->vertexes[3] = 1;
+A->vertexes[4] = 1;
+A->vertexes[5] = 1;
+move_y(A, 20);
+ck_assert_double_eq(A->vertexes[1], 20);
+ck_assert_double_eq(A->vertexes[4], 21);
+free(A);
+
+#test move_z_1
+data_t *A = malloc(sizeof(data_t));
+A->countOfVertexes = 2;
+A->vertexes = malloc(A->countOfVertexes * 3 * sizeof(double));
+A->vertexes[0] = 0;
+A->vertexes[1] = 0;
+A->vertexes[2] = 0;
+A->vertexes[3] = 1;
+A->vertexes[4] = 1;
+A->vertexes[5] = 1;
+move_z(A, 20);
+ck_assert_double_eq(A->vertexes[2], 20);
+ck_assert_double_eq(A->vertexes[5], 21);
+free(A);
+
+#test deg_to_rad_1
+double angle = 90;
+double rad = degree_to_rad(angle);
+ck_assert_double_eq(rad, M_PI/2);
+
+#test rotate_x
+data_t *A = malloc(sizeof(data_t));
+A->countOfVertexes = 8;
+A->vertexes = malloc(A->countOfVertexes * 3 * sizeof(double));
+A->vertexes[0] = 1;
+A->vertexes[1] = -1;
+A->vertexes[2] = -1;
+
+A->vertexes[3] = 1;
+A->vertexes[4] = -1;
+A->vertexes[5] = 1;
+
+A->vertexes[6] = -1;
+A->vertexes[7] = -1;
+A->vertexes[8] = 1;
+
+A->vertexes[9] = -1;
+A->vertexes[10] = -1;
+A->vertexes[11] = -1;
+
+A->vertexes[12] = 1;
+A->vertexes[13] = 1;
+A->vertexes[14] = -1;
+
+A->vertexes[15] = 1;
+A->vertexes[16] = 1;
+A->vertexes[17] = 1;
+
+A->vertexes[18] = -1;
+A->vertexes[19] = 1;
+A->vertexes[20] = 1;
+
+A->vertexes[21] = -1;
+A->vertexes[22] = 1;
+A->vertexes[23] = -1;
+
+double angle = M_PI / 2;
+rotation_by_ox(A, angle);
+
+ck_assert_double_eq_tol(A->vertexes[0], 1, EPS);
+ck_assert_double_eq_tol(A->vertexes[1], -1, EPS);
+ck_assert_double_eq_tol(A->vertexes[2], 1, EPS);
+
+ck_assert_double_eq_tol(A->vertexes[3], 1, EPS);
+ck_assert_double_eq_tol(A->vertexes[4], 1, EPS);
+ck_assert_double_eq_tol(A->vertexes[5], 1, EPS);
+
+ck_assert_double_eq_tol(A->vertexes[15], 1, EPS);
+ck_assert_double_eq_tol(A->vertexes[16], 1, EPS);
+ck_assert_double_eq_tol(A->vertexes[17], -1, EPS);
+
+ck_assert_double_eq_tol(A->vertexes[12], 1, EPS);
+ck_assert_double_eq_tol(A->vertexes[13], -1, EPS);
+ck_assert_double_eq_tol(A->vertexes[14], -1, EPS);
+
+free(A->vertexes);
+free(A);
+
+/****************************************************/
+
+#test rotate_z
+data_t *A = malloc(sizeof(data_t));
+A->countOfVertexes = 8;
+A->vertexes = malloc(A->countOfVertexes * 3 * sizeof(double));
+A->vertexes[0] = 1;
+A->vertexes[1] = -1;
+A->vertexes[2] = -1;
+
+A->vertexes[3] = 1;
+A->vertexes[4] = -1;
+A->vertexes[5] = 1;
+
+A->vertexes[6] = -1;
+A->vertexes[7] = -1;
+A->vertexes[8] = 1;
+
+A->vertexes[9] = -1;
+A->vertexes[10] = -1;
+A->vertexes[11] = -1;
+
+A->vertexes[12] = 1;
+A->vertexes[13] = 1;
+A->vertexes[14] = -1;
+
+A->vertexes[15] = 1;
+A->vertexes[16] = 1;
+A->vertexes[17] = 1;
+
+A->vertexes[18] = -1;
+A->vertexes[19] = 1;
+A->vertexes[20] = 1;
+
+A->vertexes[21] = -1;
+A->vertexes[22] = 1;
+A->vertexes[23] = -1;
+
+double angle = M_PI / 2;
+rotation_by_oz(A, angle);
+
+ck_assert_double_eq_tol(A->vertexes[3], -1, EPS);
+ck_assert_double_eq_tol(A->vertexes[4], -1, EPS);
+ck_assert_double_eq_tol(A->vertexes[5], 1, EPS);
+
+ck_assert_double_eq_tol(A->vertexes[6], -1, EPS);
+ck_assert_double_eq_tol(A->vertexes[7], 1, EPS);
+ck_assert_double_eq_tol(A->vertexes[8], 1, EPS);
+
+ck_assert_double_eq_tol(A->vertexes[18], 1, EPS);
+ck_assert_double_eq_tol(A->vertexes[19], 1, EPS);
+ck_assert_double_eq_tol(A->vertexes[20], 1, EPS);
+
+ck_assert_double_eq_tol(A->vertexes[15], 1, EPS);
+ck_assert_double_eq_tol(A->vertexes[16], -1, EPS);
+ck_assert_double_eq_tol(A->vertexes[17], 1, EPS);
+
+free(A->vertexes);
+free(A);
+
+/****************************************************/
+
+#test rotate_y
+data_t *A = malloc(sizeof(data_t));
+A->countOfVertexes = 8;
+A->vertexes = malloc(A->countOfVertexes * 3 * sizeof(double));
+A->vertexes[0] = 1;
+A->vertexes[1] = -1;
+A->vertexes[2] = -1;
+
+A->vertexes[3] = 1;
+A->vertexes[4] = -1;
+A->vertexes[5] = 1;
+
+A->vertexes[6] = -1;
+A->vertexes[7] = -1;
+A->vertexes[8] = 1;
+
+A->vertexes[9] = -1;
+A->vertexes[10] = -1;
+A->vertexes[11] = -1;
+
+A->vertexes[12] = 1;
+A->vertexes[13] = 1;
+A->vertexes[14] = -1;
+
+A->vertexes[15] = 1;
+A->vertexes[16] = 1;
+A->vertexes[17] = 1;
+
+A->vertexes[18] = -1;
+A->vertexes[19] = 1;
+A->vertexes[20] = 1;
+
+A->vertexes[21] = -1;
+A->vertexes[22] = 1;
+A->vertexes[23] = -1;
+
+double angle = M_PI / 2;
+rotation_by_oy(A, angle);
+
+
+ck_assert_double_eq_tol(A->vertexes[18], -1, EPS);
+ck_assert_double_eq_tol(A->vertexes[19], 1, EPS);
+ck_assert_double_eq_tol(A->vertexes[20], -1, EPS);
+
+ck_assert_double_eq_tol(A->vertexes[21], 1, EPS);
+ck_assert_double_eq_tol(A->vertexes[22], 1, EPS);
+ck_assert_double_eq_tol(A->vertexes[23], -1, EPS);
+
+ck_assert_double_eq_tol(A->vertexes[12], 1, EPS);
+ck_assert_double_eq_tol(A->vertexes[13], 1, EPS);
+ck_assert_double_eq_tol(A->vertexes[14], 1, EPS);
+
+ck_assert_double_eq_tol(A->vertexes[15], -1, EPS);
+ck_assert_double_eq_tol(A->vertexes[16], 1, EPS);
+ck_assert_double_eq_tol(A->vertexes[17], 1, EPS);
+
+free(A->vertexes);
+free(A);
+
+/****************************************************/
+
+#test scale_1
+data_t *A = malloc(sizeof(data_t));
+A->countOfVertexes = 8;
+A->vertexes = malloc(A->countOfVertexes * 3 * sizeof(double));
+A->vertexes[0] = 1;
+A->vertexes[1] = -1;
+A->vertexes[2] = -1;
+
+A->vertexes[3] = 1;
+A->vertexes[4] = -1;
+A->vertexes[5] = 1;
+
+A->vertexes[6] = -1;
+A->vertexes[7] = -1;
+A->vertexes[8] = 1;
+
+A->vertexes[9] = -1;
+A->vertexes[10] = -1;
+A->vertexes[11] = -1;
+
+A->vertexes[12] = 1;
+A->vertexes[13] = 1;
+A->vertexes[14] = -1;
+
+A->vertexes[15] = 1;
+A->vertexes[16] = 1;
+A->vertexes[17] = 1;
+
+A->vertexes[18] = -1;
+A->vertexes[19] = 1;
+A->vertexes[20] = 1;
+
+A->vertexes[21] = -1;
+A->vertexes[22] = 1;
+A->vertexes[23] = -1;
+
+double s = 2;
+scale(A, s);
+ck_assert_double_eq_tol(A->vertexes[0], 2, EPS);
+ck_assert_double_eq_tol(A->vertexes[1], -2, EPS);
+ck_assert_double_eq_tol(A->vertexes[2], -2, EPS);
+
+ck_assert_double_eq_tol(A->vertexes[3], 2, EPS);
+ck_assert_double_eq_tol(A->vertexes[4], -2, EPS);
+ck_assert_double_eq_tol(A->vertexes[5], 2, EPS);
+
+ck_assert_double_eq_tol(A->vertexes[6], -2, EPS);
+ck_assert_double_eq_tol(A->vertexes[7], -2, EPS);
+ck_assert_double_eq_tol(A->vertexes[8], 2, EPS);
+
+ck_assert_double_eq_tol(A->vertexes[9], -2, EPS);
+ck_assert_double_eq_tol(A->vertexes[10], -2, EPS);
+ck_assert_double_eq_tol(A->vertexes[11], -2, EPS);
+
+ck_assert_double_eq_tol(A->vertexes[12], 2, EPS);
+ck_assert_double_eq_tol(A->vertexes[13], 2, EPS);
+ck_assert_double_eq_tol(A->vertexes[14], -2, EPS);
+
+ck_assert_double_eq_tol(A->vertexes[15], 2, EPS);
+ck_assert_double_eq_tol(A->vertexes[16], 2, EPS);
+ck_assert_double_eq_tol(A->vertexes[17], 2, EPS);
+
+ck_assert_double_eq_tol(A->vertexes[18], -2, EPS);
+ck_assert_double_eq_tol(A->vertexes[19], 2, EPS);
+ck_assert_double_eq_tol(A->vertexes[20], 2, EPS);
+
+ck_assert_double_eq_tol(A->vertexes[21], -2, EPS);
+ck_assert_double_eq_tol(A->vertexes[22], 2, EPS);
+ck_assert_double_eq_tol(A->vertexes[23], -2, EPS);
+
+free(A->vertexes);
+free(A);
+
+/********************* ТЕСТЫ ПАРСЕРА **********************/
+
+#test read_count_1
+char* path = "./models/cube.obj";
+data_t A = readCount(path);
+ck_assert_int_eq(A.countOfVertexes, 8);
+ck_assert_int_eq(A.countOfFacets, 12);
+
+#test read_data_1
+char* path = "./models/cube.obj";
+data_t A = readCount(path);
+readData(path, &A);
+ck_assert_int_eq(A.countOfVertexes, 8);
+ck_assert_int_eq(A.countOfFacets, 12);
+
+double arr_vert[27] = {0, 0, 0,
+                    1, -1, -1,   1, -1, 1,   -1, -1, 1, 
+                    -1, -1, -1,  1, 1, -1,  1, 1, 1, 
+                    -1, 1, 1,   -1, 1, -1};
+for (int i = 0; i < A.countOfVertexes * 3 + 3; i++) {
+    ck_assert_double_eq_tol(A.vertexes[i], arr_vert[i], EPS);
+}
+
+double arr_fac[72] = {2, 3, 3, 4, 4, 2,
+                    8, 7, 7, 6, 6, 8,
+                    5, 6, 6, 2, 2, 5,
+                    6, 7, 7, 3, 3, 6,
+                    3, 7, 7, 8, 8, 3,
+                    1, 4, 4, 8, 8, 1,
+                    1, 2, 2, 4, 4, 1,
+                    5, 8, 8, 6, 6, 5,
+                    1, 5, 5, 2, 2, 1,
+                    2, 6, 6, 3, 3, 2,
+                    4, 3, 3, 8, 8, 4,
+                    5, 1, 1, 8, 8, 5};
+for (int i = 0; i < A.vert_in_polygons * 2; i++) {
+    ck_assert_double_eq_tol(A.facets[i], arr_fac[i], EPS);
+}
